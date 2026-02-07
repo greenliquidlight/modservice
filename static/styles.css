@@ -1,0 +1,253 @@
+:root {
+  --ink: #0f1416;
+  --paper: #f6f1e8;
+  --accent: #ef6a4c;
+  --accent-dark: #c8523b;
+  --mint: #8dd6c6;
+  --shadow: rgba(10, 20, 24, 0.12);
+  --border: rgba(15, 20, 22, 0.12);
+  --radius-lg: 24px;
+  --radius-md: 16px;
+  --radius-sm: 10px;
+  --font-display: "Space Grotesk", "Poppins", "Segoe UI", sans-serif;
+  --font-body: "IBM Plex Sans", "Segoe UI", sans-serif;
+}
+
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap");
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  color: var(--ink);
+  background: var(--paper);
+  min-height: 100vh;
+}
+
+.bg {
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(900px 600px at 10% 10%, #ffe7d7 0%, transparent 65%),
+    radial-gradient(800px 500px at 90% 20%, #d7f3eb 0%, transparent 60%),
+    linear-gradient(140deg, #fff7ef 0%, #f0f8f4 100%);
+  z-index: -1;
+}
+
+.shell {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 40px 20px 80px;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.hero {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.eyebrow {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: #7a6b62;
+  margin: 0 0 10px;
+}
+
+h1 {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  margin: 0 0 10px;
+}
+
+.subhead {
+  margin: 0;
+  max-width: 520px;
+  color: #534b46;
+  font-size: 1.05rem;
+}
+
+.hero-actions {
+  display: flex;
+  gap: 12px;
+}
+
+.btn {
+  border: none;
+  padding: 12px 18px;
+  border-radius: 999px;
+  background: var(--ink);
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 12px 24px -16px rgba(15, 20, 22, 0.4);
+}
+
+.btn.primary {
+  background: var(--accent);
+}
+
+.btn.ghost {
+  background: transparent;
+  color: var(--ink);
+  border: 1px solid var(--border);
+  box-shadow: none;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+}
+
+.panel {
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  box-shadow: 0 20px 60px -40px var(--shadow);
+  backdrop-filter: blur(8px);
+}
+
+.panel-head {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.panel h2 {
+  margin: 0;
+  font-family: var(--font-display);
+}
+
+.panel-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 0.85rem;
+  color: #6c5f58;
+}
+
+.field input,
+.field select {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 8px 10px;
+  font-size: 0.95rem;
+  background: #fff;
+}
+
+.field.inline {
+  flex: 1;
+}
+
+.server-list {
+  display: grid;
+  gap: 12px;
+}
+
+.server-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 18px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border);
+  background: #fff;
+  box-shadow: 0 10px 30px -24px var(--shadow);
+}
+
+.server-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.server-meta strong {
+  font-size: 1.05rem;
+}
+
+.badge {
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: rgba(141, 214, 198, 0.35);
+  font-weight: 600;
+  color: #256759;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 16px;
+}
+
+.card {
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border);
+  padding: 18px;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.card h3 {
+  margin: 0;
+  font-family: var(--font-display);
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+}
+
+.result {
+  font-size: 0.9rem;
+  color: #6c5f58;
+  min-height: 1.2rem;
+}
+
+@media (max-width: 720px) {
+  .hero-actions {
+    width: 100%;
+  }
+
+  .btn {
+    flex: 1;
+  }
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.panel,
+.server-card,
+.card {
+  animation: rise 0.5s ease forwards;
+}

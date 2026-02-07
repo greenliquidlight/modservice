@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Modbus Tool</title>
+    <link rel="stylesheet" href="/static/styles.css" />
+  </head>
+  <body>
+    <div class="bg"></div>
+    <main class="shell">
+      <header class="hero">
+        <div>
+          <p class="eyebrow">Local Modbus Lab</p>
+          <h1>Modbus Server Manager</h1>
+          <p class="subhead">
+            Spin up isolated Modbus TCP servers on loopback IPs, then poke coils and registers.
+          </p>
+        </div>
+        <div class="hero-actions">
+          <button id="addServer" class="btn primary">Add Server</button>
+          <button id="refresh" class="btn ghost">Refresh</button>
+        </div>
+      </header>
+
+      <section class="panel">
+        <div class="panel-head">
+          <h2>Servers</h2>
+          <div class="panel-actions">
+            <label class="field">
+              <span>Port</span>
+              <input id="port" type="number" min="1" max="65535" value="1502" />
+            </label>
+            <label class="field">
+              <span>Unit ID</span>
+              <input id="unitId" type="number" min="1" max="247" value="1" />
+            </label>
+            <label class="field">
+              <span>Coils</span>
+              <input id="coilsSize" type="number" min="1" max="65535" value="100" />
+            </label>
+            <label class="field">
+              <span>Holding</span>
+              <input id="holdingSize" type="number" min="1" max="65535" value="2000" />
+            </label>
+          </div>
+        </div>
+        <div id="serverList" class="server-list"></div>
+      </section>
+
+      <section class="panel">
+        <div class="panel-head">
+          <h2>Registers &amp; Coils</h2>
+          <div class="panel-actions">
+            <div class="badge" id="selectedServer">No server selected</div>
+          </div>
+        </div>
+        <div class="grid">
+          <div class="card">
+            <h3>Holding Registers</h3>
+            <div class="row">
+              <label class="field inline">
+                <span>Address</span>
+                <input id="hrAddr" type="number" min="0" value="0" />
+              </label>
+              <label class="field inline">
+                <span>Value</span>
+                <input id="hrValue" type="number" min="0" max="65535" value="0" />
+              </label>
+            </div>
+            <div class="row">
+              <button id="writeHr" class="btn">Write</button>
+              <button id="readHr" class="btn ghost">Read</button>
+              <div id="hrResult" class="result"></div>
+            </div>
+          </div>
+          <div class="card">
+            <h3>Coils</h3>
+            <div class="row">
+              <label class="field inline">
+                <span>Address</span>
+                <input id="coilAddr" type="number" min="0" value="0" />
+              </label>
+              <label class="field inline">
+                <span>Value</span>
+                <select id="coilValue">
+                  <option value="true">True</option>
+                  <option value="false">False</option>
+                </select>
+              </label>
+            </div>
+            <div class="row">
+              <button id="writeCoil" class="btn">Write</button>
+              <button id="readCoil" class="btn ghost">Read</button>
+              <div id="coilResult" class="result"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+    <script src="/static/app.js"></script>
+  </body>
+</html>
