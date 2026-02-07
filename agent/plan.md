@@ -160,7 +160,7 @@ modbus-tool/
 - [ ] Add CI basics (optional): GitHub Actions for ubuntu+windows.
 
 ### Phase 3 — Frontend MVP
-- [ ] Static UI that:
+- [x] Static UI that:
   - lists servers
   - “Add Server” button calls `POST /api/servers`
   - shows server IP:port
