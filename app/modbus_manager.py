@@ -39,15 +39,15 @@ class ServerManager:
                 return str(ip)
             raise RuntimeError("Loopback IP pool exhausted (127/8).")
 
-    def create(self, port: int, unit_id: int, holding_size: int) -> Instance:
+    def create(self, port: int, unit_id: int, coils_size: int, holding_size: int) -> Instance:
         sid = str(uuid.uuid4())
         ip = self._alloc_ip()
 
         store = ModbusDeviceContext(
-            di=ModbusSequentialDataBlock(0, [0] * 100),
-            co=ModbusSequentialDataBlock(0, [0] * 100),
-            hr=ModbusSequentialDataBlock(0, [0] * holding_size),
-            ir=ModbusSequentialDataBlock(0, [0] * 100),
+            di=ModbusSequentialDataBlock(1, [0] * 100),
+            co=ModbusSequentialDataBlock(1, [0] * coils_size),
+            hr=ModbusSequentialDataBlock(1, [0] * holding_size),
+            ir=ModbusSequentialDataBlock(1, [0] * 100),
         )
         context = ModbusServerContext(devices=store, single=True)
 
@@ -87,3 +87,12 @@ class ServerManager:
     def holding_set(self, sid: str, addr: int, value: int) -> None:
         inst = self._instances[sid]
         inst.context[0x00].setValues(3, addr, [value])
+
+    # Coil access (function code 1/5)
+    def coils_get(self, sid: str, addr: int, count: int) -> list[bool]:
+        inst = self._instances[sid]
+        return inst.context[0x00].getValues(1, addr, count)
+
+    def coils_set(self, sid: str, addr: int, value: bool) -> None:
+        inst = self._instances[sid]
+        inst.context[0x00].setValues(5, addr, [value])

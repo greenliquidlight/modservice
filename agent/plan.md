@@ -88,7 +88,7 @@ Primary goal: fast, cross-platform, minimal setup. Security is not a concern (lo
 - `POST /api/servers`
 - Request JSON:
   ```json
-  { "port": 1502, "unit_id": 1, "holding_size": 2000 }
+  { "port": 1502, "unit_id": 1, "coils_size": 100, "holding_size": 2000 }
   ```
 - Response JSON:
   ```json
@@ -108,11 +108,17 @@ Primary goal: fast, cross-platform, minimal setup. Security is not a concern (lo
 - `PUT /api/servers/{id}/holding/{addr}`
   - body: `{ "value": 123 }`
 
+### Coils
+- `GET /api/servers/{id}/coils?addr=0&count=10`
+- `PUT /api/servers/{id}/coils/{addr}`
+  - body: `{ "value": true }`
+
 ---
 
 ## 6. Data Model (MVP)
 - Holding registers: sequential array size `holding_size` (default 2000)
-- Coils/inputs optional for MVP (can stub or implement quickly)
+- Coils: sequential array size `coils_size` (default 100)
+- Inputs optional for MVP (can stub or implement quickly)
 - No persistence initially (in-memory). Add SQLite later if needed.
 
 ---
@@ -138,15 +144,16 @@ modbus-tool/
 
 ## 8. Implementation Plan (Step-by-step)
 ### Phase 1 — Backend skeleton
-- [ ] Create FastAPI app with `/api/servers` create/list endpoints.
-- [ ] Implement ServerManager:
+- [x] Create FastAPI app with `/api/servers` create/list endpoints.
+- [x] Implement ServerManager:
   - allocate IP in 127/8
   - create pymodbus datastore
   - start server bound to instance IP and port
-- [ ] Add holding register read/write endpoints.
+- [x] Add holding register read/write endpoints.
+- [x] Add coil read/write endpoints.
 
 ### Phase 2 — Integration tests
-- [ ] Write pytest integration test that:
+- [x] Write pytest integration test that:
   - creates 2 servers on same port but different loopback IP
   - writes register 0 on each to different values
   - reads back using pymodbus client and confirms isolation

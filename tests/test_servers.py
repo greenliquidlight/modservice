@@ -34,4 +34,32 @@ async def test_multiple_servers_different_loopback_ips_isolated():
     finally:
         ca.close()
         cb.close()
+
+
+@pytest.mark.asyncio
+async def test_datastore_allocations_allow_coil_and_register_rw():
+    port = random.randint(20000, 40000)
+
+    transport = httpx.ASGITransport(app=app)
+    async with httpx.AsyncClient(transport=transport, base_url="http://test") as ac:
+        server = (
+            await ac.post(
+                "/api/servers",
+                json={"port": port, "unit_id": 1, "coils_size": 7, "holding_size": 5},
+            )
+        ).json()
+
+    client = AsyncModbusTcpClient(host=server["ip"], port=port)
+    await client.connect()
+    try:
+        await client.write_coil(6, True)
+        await client.write_register(4, 555)
+
+        rc = await client.read_coils(6, count=1)
+        rr = await client.read_holding_registers(4, count=1)
+
+        assert rc.bits[0] is True
+        assert rr.registers[0] == 555
+    finally:
+        client.close()
         
