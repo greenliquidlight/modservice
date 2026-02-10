@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Modbus Tool</title>
-    <link rel="stylesheet" href="/static/styles.css" />
+    <link rel="stylesheet" href="/static/styles.css?v={{asset_version}}" />
   </head>
   <body>
     <div class="bg"></div>
@@ -46,58 +46,60 @@
           </div>
         </div>
         <div id="serverList" class="server-list"></div>
-      </section>
-
-      <section class="panel">
-        <div class="panel-head">
-          <h2>Registers &amp; Coils</h2>
-          <div class="panel-actions">
-            <div class="badge" id="selectedServer">No server selected</div>
-          </div>
-        </div>
-        <div class="grid">
-          <div class="card">
-            <h3>Holding Registers</h3>
-            <div class="row">
-              <label class="field inline">
-                <span>Address</span>
-                <input id="hrAddr" type="number" min="0" value="0" />
-              </label>
-              <label class="field inline">
-                <span>Value</span>
-                <input id="hrValue" type="number" min="0" max="65535" value="0" />
-              </label>
-            </div>
-            <div class="row">
-              <button id="writeHr" class="btn">Write</button>
-              <button id="readHr" class="btn ghost">Read</button>
-              <div id="hrResult" class="result"></div>
+        <div id="serverDetails" class="server-details hidden">
+          <div class="details-head">
+            <div>
+              <h3>Active Server</h3>
+              <p class="panel-sub"><span id="selectedServer">No server selected</span></p>
             </div>
           </div>
-          <div class="card">
-            <h3>Coils</h3>
-            <div class="row">
-              <label class="field inline">
-                <span>Address</span>
-                <input id="coilAddr" type="number" min="0" value="0" />
-              </label>
-              <label class="field inline">
-                <span>Value</span>
-                <select id="coilValue">
-                  <option value="true">True</option>
-                  <option value="false">False</option>
-                </select>
-              </label>
+          <div class="grid">
+            <div class="card">
+              <div class="card-head">
+                <h3>Coils</h3>
+                <div class="card-actions">
+                  <button id="readCoils" class="btn ghost">Read</button>
+                  <button id="writeCoils" class="btn">Write</button>
+                </div>
+              </div>
+              <div class="table-wrap">
+                <table id="coilsTable" class="data-table">
+                  <thead>
+                    <tr>
+                      <th>Address</th>
+                      <th>Value</th>
+                    </tr>
+                  </thead>
+                  <tbody></tbody>
+                </table>
+              </div>
+              <div id="coilsStatus" class="result"></div>
             </div>
-            <div class="row">
-              <button id="writeCoil" class="btn">Write</button>
-              <button id="readCoil" class="btn ghost">Read</button>
-              <div id="coilResult" class="result"></div>
+            <div class="card">
+              <div class="card-head">
+                <h3>Holding Registers</h3>
+                <div class="card-actions">
+                  <button id="readHolding" class="btn ghost">Read</button>
+                  <button id="writeHolding" class="btn">Write</button>
+                </div>
+              </div>
+              <div class="table-wrap">
+                <table id="holdingTable" class="data-table">
+                  <thead>
+                    <tr>
+                      <th>Address</th>
+                      <th>Value</th>
+                    </tr>
+                  </thead>
+                  <tbody></tbody>
+                </table>
+              </div>
+              <div id="holdingStatus" class="result"></div>
             </div>
           </div>
         </div>
       </section>
     </main>
-    <script src="/static/app.js"></script>
+    <script src="/static/app.js?v={{asset_version}}"></script>
   </body>
 </html>

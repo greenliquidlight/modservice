@@ -14,6 +14,8 @@ class ServerInfo(BaseModel):
     ip: str
     port: int
     unit_id: int
+    coils_size: int
+    holding_size: int
     status: Literal["running", "stopped"]
 
 
@@ -23,3 +25,21 @@ class HoldingWrite(BaseModel):
 
 class CoilWrite(BaseModel):
     value: bool
+
+
+class HoldingBatchItem(BaseModel):
+    addr: int = Field(ge=0)
+    value: int = Field(ge=0, le=65535)
+
+
+class HoldingBatchWrite(BaseModel):
+    values: list[HoldingBatchItem]
+
+
+class CoilBatchItem(BaseModel):
+    addr: int = Field(ge=0)
+    value: bool
+
+
+class CoilBatchWrite(BaseModel):
+    values: list[CoilBatchItem]

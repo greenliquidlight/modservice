@@ -17,6 +17,8 @@ class Instance:
     ip: str
     port: int
     unit_id: int
+    coils_size: int
+    holding_size: int
     context: ModbusServerContext
     server: Optional[ModbusTcpServer] = None
 
@@ -51,7 +53,15 @@ class ServerManager:
         )
         context = ModbusServerContext(devices=store, single=True)
 
-        inst = Instance(id=sid, ip=ip, port=port, unit_id=unit_id, context=context)
+        inst = Instance(
+            id=sid,
+            ip=ip,
+            port=port,
+            unit_id=unit_id,
+            coils_size=coils_size,
+            holding_size=holding_size,
+            context=context,
+        )
         self._instances[sid] = inst
         return inst
 
@@ -88,6 +98,11 @@ class ServerManager:
         inst = self._instances[sid]
         inst.context[0x00].setValues(3, addr, [value])
 
+    def holding_set_many(self, sid: str, items: list[tuple[int, int]]) -> None:
+        inst = self._instances[sid]
+        for addr, value in items:
+            inst.context[0x00].setValues(3, addr, [value])
+
     # Coil access (function code 1/5)
     def coils_get(self, sid: str, addr: int, count: int) -> list[bool]:
         inst = self._instances[sid]
@@ -96,3 +111,8 @@ class ServerManager:
     def coils_set(self, sid: str, addr: int, value: bool) -> None:
         inst = self._instances[sid]
         inst.context[0x00].setValues(5, addr, [value])
+
+    def coils_set_many(self, sid: str, items: list[tuple[int, bool]]) -> None:
+        inst = self._instances[sid]
+        for addr, value in items:
+            inst.context[0x00].setValues(5, addr, [value])

@@ -20,6 +20,7 @@ Modbus server tool with a web-based front end.
 ### Run the app
 - `uv run uvicorn app.main:app --reload`
 - Open http://127.0.0.1:8000
+- Static assets are cache-busted automatically based on file timestamps.
 
 ### Run tests
 - `uv run pytest -q`
